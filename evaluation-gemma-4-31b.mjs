@@ -64,9 +64,12 @@ async function main() {
             };
 
             for (const [id, lens] of Object.entries(ANALYSIS_LENSES)) {
-                const prompt = `作品名: ${work.title}\n視点: ${lens.name}\n指示: ${lens.prompt}\n\n本文:\n${chunks[0]}`;
+                const prompt = `作品名: ${work.title}\n視点: ${lens.name}\n指示: ${lens.prompt}\n出力は1000文字以内で行うこと。\n\n本文:\n${chunks[0]}`;
                 const result = await model.respond(prompt);
                 workAnalysis.details[id] = result.nonReasoningContent || result.content; // [1]
+
+		console.log(`初回トークン時間 (TTFT): ${result.stats.timeToFirstTokenSec} 秒, トークン生成速度: ${result.stats.tokensPerSecond}tokens/sec, 終了理由: ${result.stats.stopReason}, 総所要時間: ${result.stats.totalTimeSec} 秒\n`);
+
             }
 
             allAnalysisReports.push(workAnalysis);
