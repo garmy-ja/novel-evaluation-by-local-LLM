@@ -1,0 +1,6 @@
+## 選考対象論文は配置するがGitHubにはアップロードしない
+novel_submissions
+
+## プログラム関連
+node_modules
+.env
